@@ -57,10 +57,10 @@ public class Config  implements CommandLineRunner{
 		Quarto q4 = quartoRepository.save(new Quarto(null, h4, CategoriaQuarto.LUXO, 3, 1313, 500.0));
 		
 		// Seed no banco de dados
-		Hospede hosp1 = hospedeRepository.save(new Hospede("Elias", LocalDate.of(2001, 3, 9), 123456781));
-		Hospede hosp2 = hospedeRepository.save(new Hospede("Casagrande", LocalDate.of(2001, 9, 27), 512312321));
-		Hospede hosp3 = hospedeRepository.save(new Hospede("Galvao", LocalDate.of(2001, 5, 9), 612423123));
-		Hospede hosp4 = hospedeRepository.save(new Hospede("Tino", LocalDate.of(2001, 7, 19), 321452422));
+		Hospede hosp1 = hospedeRepository.save(new Hospede("Elias", LocalDate.of(2001, 3, 9), "12345678911"));
+		Hospede hosp2 = hospedeRepository.save(new Hospede("Casagrande", LocalDate.of(2001, 9, 27), "12345678912"));
+		Hospede hosp3 = hospedeRepository.save(new Hospede("Galvao", LocalDate.of(2001, 5, 9), "12345678913"));
+		Hospede hosp4 = hospedeRepository.save(new Hospede("Tino", LocalDate.of(2001, 7, 19), "12345678914"));
 		
 		Hospedagem hos1 = hospedagemRepository.save(new Hospedagem(q1, hosp1, LocalDate.of(2021, 7, 20), LocalDate.of(2021, 7, 22)));
 		Hospedagem hos2 = hospedagemRepository.save(new Hospedagem(q2, hosp2, LocalDate.of(2021, 7, 20), LocalDate.of(2021, 7, 23)));
