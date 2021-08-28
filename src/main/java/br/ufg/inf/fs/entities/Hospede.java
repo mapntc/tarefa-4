@@ -3,6 +3,7 @@ package br.ufg.inf.fs.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,13 +20,15 @@ public class Hospede implements Serializable {
 	private Integer idHospede;
 	private String nmHospede;
 	private LocalDate dtNascimento;
-	private Integer cpf;
+	
+	@Column(unique = true)
+	private String cpf;
 
 	@Deprecated // usado apenas para API de Reflection
 	public Hospede() {
 	}
 
-	public Hospede(String nmHospede, LocalDate dtNascimento, Integer cpf) {
+	public Hospede(String nmHospede, LocalDate dtNascimento, String cpf) {
 		this.nmHospede = nmHospede;
 		this.dtNascimento = dtNascimento;
 		this.cpf = cpf;
@@ -55,17 +58,11 @@ public class Hospede implements Serializable {
 		this.dtNascimento = dtNascimento;
 	}
 
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	@Override
-	public String toString() {
-		return "Hospede [idHospede=" + idHospede + ", nmHospede=" + nmHospede + ", dtNascimento=" + dtNascimento
-				+ ", cpf=" + cpf + "]";
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufg.inf.fs.entities.Hospedagem;
+import br.ufg.inf.fs.exceptions.HospedagemException;
 import br.ufg.inf.fs.repositories.HospedagemRepository;
 
 @Service
@@ -24,11 +25,13 @@ public class HospedagemBusiness {
 		return retorno.get();
 	}
 	
-	public Hospedagem insert(Hospedagem hospedagem) {
+	public Hospedagem insert(Hospedagem hospedagem) throws HospedagemException {
+		validaHospedagem(hospedagem);
 		return repository.save(hospedagem);
 	}
 	
-	public Hospedagem update(Hospedagem hospedagem) {
+	public Hospedagem update(Hospedagem hospedagem) throws HospedagemException {
+		validaHospedagem(hospedagem);
 		return repository.save(hospedagem);
 	}
 	
@@ -36,4 +39,12 @@ public class HospedagemBusiness {
 		repository.deleteById(id);
 	}
 	
+	private void validaHospedagem(Hospedagem hospedagem) throws HospedagemException {
+		if (hospedagem.getIdQuarto().getIdQuarto() == null) {
+			throw new HospedagemException("0301");
+		}
+		if (hospedagem.getIdHospede().getIdHospede() == null) {
+			throw new HospedagemException("0302");
+		}
+	}
 }
