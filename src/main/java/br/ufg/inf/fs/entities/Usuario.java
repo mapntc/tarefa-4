@@ -2,6 +2,7 @@ package br.ufg.inf.fs.entities;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -35,10 +36,11 @@ public class Usuario implements UserDetails{
 	@Deprecated
 	public Usuario() { }
 	
-	public Usuario(String login, String nome, String senha) {
+	public Usuario(String login, String nome, String senha, List<Role> roles) {
 		this.login = login;
 		this.nome = nome;
 		this.senha = senha;
+		this.roles.addAll(roles);
 	}
 
 	public String getLogin() {

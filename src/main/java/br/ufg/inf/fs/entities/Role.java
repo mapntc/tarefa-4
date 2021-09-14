@@ -25,9 +25,8 @@ public class Role implements GrantedAuthority {
 	public Role() { }
 	
 	
-	public Role(String role, List<Usuario> usuarios) {
+	public Role(String role) {
 		this.role = role;
-		this.usuarios.addAll(usuarios);
 	}
 
 	@Override

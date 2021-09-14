@@ -1,21 +1,28 @@
 package br.ufg.inf.fs;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.ufg.inf.fs.entities.Hospedagem;
 import br.ufg.inf.fs.entities.Hospede;
 import br.ufg.inf.fs.entities.Hotel;
 import br.ufg.inf.fs.entities.Quarto;
+import br.ufg.inf.fs.entities.Role;
+import br.ufg.inf.fs.entities.Usuario;
 import br.ufg.inf.fs.enums.CategoriaQuarto;
 import br.ufg.inf.fs.repositories.HospedagemRepository;
 import br.ufg.inf.fs.repositories.HospedeRepository;
 import br.ufg.inf.fs.repositories.HotelRepository;
 import br.ufg.inf.fs.repositories.QuartoRepository;
+import br.ufg.inf.fs.repositories.RoleRepository;
+import br.ufg.inf.fs.repositories.UsuarioRepository;
 
 @Configuration
 @Profile("dev")
@@ -32,6 +39,12 @@ public class Config  implements CommandLineRunner{
 	
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -65,6 +78,15 @@ public class Config  implements CommandLineRunner{
 		Hospedagem hos1 = hospedagemRepository.save(new Hospedagem(q1, hosp1, LocalDate.of(2021, 7, 20), LocalDate.of(2021, 7, 22)));
 		Hospedagem hos2 = hospedagemRepository.save(new Hospedagem(q2, hosp2, LocalDate.of(2021, 7, 20), LocalDate.of(2021, 7, 23)));
 		Hospedagem hos3 = hospedagemRepository.save(new Hospedagem(q3, hosp3, LocalDate.of(2021, 7, 20), LocalDate.of(2021, 7, 24)));
+		
+		List<Role> roles = new ArrayList<>();
+		roles.add(roleRepository.save(new Role("ROLE_ADMIN")));
+		roles.add(roleRepository.save(new Role("ROLE_USER")));
+		roles.add(roleRepository.save(new Role("ROLE_GUEST")));
+		
+		Usuario user1 = new Usuario("elias", "Elias Nepomuceno", new BCryptPasswordEncoder().encode("123456"), roles);
+		
+		usuarioRepository.save(user1);
 	}
 
 }
