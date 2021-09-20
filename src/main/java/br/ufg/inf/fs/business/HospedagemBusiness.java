@@ -1,9 +1,10 @@
 package br.ufg.inf.fs.business;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ufg.inf.fs.entities.Hospedagem;
@@ -16,8 +17,8 @@ public class HospedagemBusiness {
 	@Autowired
 	private HospedagemRepository repository;
 	
-	public List<Hospedagem> findAll(){
-		return repository.findAll();		
+	public Page<Hospedagem> findAll(Pageable pageable){
+		return repository.findAll(pageable);
 	}
 	
 	public Hospedagem findById(Integer id) {

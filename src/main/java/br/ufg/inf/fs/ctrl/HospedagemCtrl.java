@@ -1,9 +1,13 @@
 package br.ufg.inf.fs.ctrl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufg.inf.fs.Messages;
 import br.ufg.inf.fs.business.HospedagemBusiness;
 import br.ufg.inf.fs.entities.Hospedagem;
-import br.ufg.inf.fs.entities.Hospede;
 import br.ufg.inf.fs.exceptions.HospedagemException;
 
 @RestController
@@ -30,20 +33,20 @@ public class HospedagemCtrl {
 	private HospedagemBusiness business;
 	
 	@GetMapping
-	public ResponseEntity<List<Hospedagem>> findAll(){
+	public ResponseEntity<Page<Hospedagem>> findAll(@PageableDefault(sort = "idHospedagem", direction = Direction.ASC, page = 0, size = 3) Pageable pageable){
 		HttpHeaders headers = new HttpHeaders();
 		HttpStatus status = HttpStatus.OK;
-		List<Hospedagem> list = new ArrayList<Hospedagem>();
+		Page<Hospedagem> list = new PageImpl<>(Collections.EMPTY_LIST);
 		try {
-			list = business.findAll();
-			if(list.size() == 0) {
+			list = business.findAll(pageable);
+			if(list.getSize() == 0) {
 				headers.add("message", Messages.get("0308"));
 			}
 		}catch (Exception e) {
 			status = HttpStatus.BAD_REQUEST;
 			headers.add("message", Messages.get("0002"));
 		}
-		return new ResponseEntity<List<Hospedagem>>(list, headers, status);
+		return new ResponseEntity<Page<Hospedagem>>(list, headers, status);
 	}
 	
 	@GetMapping("/{id}")
